@@ -47,8 +47,8 @@ router.get('/name/:name', function(req, res, next) {
   });
 });
 
-  /* ------ GET /user/name/:name/:password. ------ */
-  router.get('/name/:name/:password', function(req, res, next) {
+  /* ------ GET /user/:name/:password. ------ */
+  router.get('/:name/:password', function(req, res, next) {
     User.findOne({ 'name': req.params.name, 'password': req.params.password }, req.body, function (err, user) {
       if (err) return next(err);
       if(user != null){
