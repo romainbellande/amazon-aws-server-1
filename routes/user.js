@@ -45,10 +45,10 @@ router.get('/name/:name', function(req, res, next) {
     }
 
   });
+});
 
-  /* ------ GET /user/name/:name. ------ */
+  /* ------ GET /user/name/:name/:password. ------ */
   router.get('/name/:name/:password', function(req, res, next) {
-
     User.findOne({ 'name': req.params.name, 'password': req.params.password }, req.body, function (err, user) {
       if (err) return next(err);
       if(user != null){
@@ -57,11 +57,7 @@ router.get('/name/:name', function(req, res, next) {
       else{
         res.send("authentication-failed");
       }
-
     });
-
-
-
 });
 
 
@@ -73,7 +69,6 @@ router.put('/:id', function(req, res, next) {
     res.json(post);
   });
 });
-
 /* ------ DELETE /user/:id ------ */
 router.delete('/:id', function(req, res, next) {
   User.findByIdAndRemove(req.params.id, req.body, function (err, post) {
