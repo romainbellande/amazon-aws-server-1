@@ -17,6 +17,8 @@ mongoose.connect('mongodb://localhost:27017/db_sp', function(err) {
 
 var routes = require('./routes/index');
 var user = require('./routes/user');
+var project = require('./routes/project');
+var task = require('./routes/task');
 
 var app = express();
 
@@ -45,6 +47,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', user);
+app.use('/project',project);
+app.use('/task',task);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

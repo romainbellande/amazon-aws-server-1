@@ -1,17 +1,23 @@
 var mongoose = require('mongoose');
 
-/* ------ User Schema ------ */
+/* ------ Project Schema ------ */
 
 var ProjectSchema = new mongoose.Schema({
   name: String,
-  client: ObjectId,
-  staff: [ObjectId],
-  descr: String
+  customer: String,
+  description: String,
+  ownerId: mongoose.Schema.Types.ObjectId
 });
 
 ProjectSchema.statics.findByName = function (name, cb) {
   return this.find({ name: new RegExp(name, 'i') }, cb);
-}
+};
+
+ProjectSchema.statics.findByOwnerId = function (ownerId, cb) {
+  return this.find({ ownerId: ownerId }, cb);
+};
 
 
-module.exports = mongoose.model('Project',UserSchema);;
+
+
+module.exports = mongoose.model('Project',ProjectSchema);;

@@ -15,9 +15,9 @@ router.get('/', function(req, res, next) {
 /* ------ POST /user ------ */
 router.post('/', function(req, res, next) {
   User.create({
-    name: req.query.username,
-    mail: req.query.usermail,
-    password: req.query.userpassword
+    name: req.query.user_name,
+    mail: req.query.user_mail,
+    password: req.query.user_password
   }, function (err, post) {
     if (err) return next(err);
     res.json(post);
