@@ -3,6 +3,7 @@ var router = express.Router();
 
 var mongoose = require('mongoose');
 var Project = require('../models/Project.js');
+var Task = require('../models/Task.js');
 
 /* ------ GET /users listing. ------ */
 router.get('/', function(req, res, next) {
@@ -22,6 +23,7 @@ router.post('/', function(req, res, next) {
   }, function (err, post) {
     if (err) return next(err);
     res.json(post);
+    console.log(post);
   });
 });
 
@@ -56,6 +58,7 @@ router.delete('/:id', function(req, res, next) {
     if (err) return next(err);
     res.json(post);
   });
+  Project.tasks.remove({});
 });
 
 module.exports = router;

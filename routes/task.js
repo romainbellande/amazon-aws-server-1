@@ -1,60 +1,62 @@
 var express = require('express');
 var router = express.Router();
-
 var mongoose = require('mongoose');
-var Task = require('../models/Task.js');
+var Project = require('../models/Project.js');
 
-/* ------ GET /users listing. ------ */
-router.get('/', function(req, res, next) {
-  Project.find(function (err, tasks) {
-    if (err) return next(err);
-    res.json(tasks);
-  });
+/* ------ GET /:projectId/task ------ */
+router.get('/:projectId/task', function(req, res, next) {
+  Project.getTasks(
+    req.params.projectId,
+    function(err,tasks){
+      if(err) console.log(err);
+      res.json(tasks);
+    }
+  );
 });
 
-/* ------ POST /task ------ */
-router.post('/', function(req, res, next) {
-  Task.create({
-    name: req.query.task_name,
-    description: req.query.task_description,
-    projectId: req.query.task_projectid
-  }, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
-  });
+/* ------ POST /:projectId/task ------ */
+router.post('/:projectId/task', function(req, res, next) {
+  Project.createTask(
+    req.params.projectId,
+    req.query.task_name,
+    req.query.task_description, function(err, task){
+      if(err) console.log(err);
+      res.json(task);
+    }
+  );
 });
 
-/* ------ GET /task/:id. ------ */
-router.get('/:id', function(req, res, next) {
-  Task.findById(req.params.id, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
+/* ------ GET /:projectId/task/:id. ------ */
+router.get('/:projectId/task/:id', function(req, res, next) {
+  Project.getTask(
+    req.params.projectId,
+    req.params.id,
+    function(err, task){
+      if(err) console.log(err);
+      res.json(task);
+    });
   });
-});
-/* ------ GET /task/project/:id. ------ */
-router.get('/project/:id', function(req, res, next) {
-  Task.findByProjectId(req.params.id, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
+
+
+  /* ------ PUT /:projectId/task/:id ------ */
+  router.put('/:projectId/task/:id', function(req, res, next) {
+    Task.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+      if (err) return next(err);
+      res.json(post);
+    });
   });
-});
+  /* ------ DELETE /:projectId/task/:id ------ */
+  router.delete('/:projectId/task/:id', function(req, res, next) {
+    Project.removeTask(
+      req.params.projectId,
+      req.params.id,
+      function(err){
+        if(err){
+          console.log(err);
+          res.send(500);
+        }
+        res.send(200);
+      });
+    });
 
-
-
-
-/* ------ PUT /task/:id ------ */
-router.put('/:id', function(req, res, next) {
-  Task.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
-  });
-});
-/* ------ DELETE /task/:id ------ */
-router.delete('/:id', function(req, res, next) {
-  Task.findByIdAndRemove(req.params.id, req.body, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
-  });
-});
-
-module.exports = router;
+    module.exports = router;

@@ -2,17 +2,14 @@ var mongoose = require('mongoose');
 
 /* ------ Project Schema ------ */
 
-var ProjectSchema = new mongoose.Schema({
+var taskSchema = new mongoose.Schema({
   name: String,
-  description: String,
-  projectId: mongoose.Schema.Types.ObjectId
+  description: String
 });
 
-ProjectSchema.statics.findByProjectId = function (projectId, cb) {
+taskSchema.statics.findByProjectId = function (projectId, cb) {
   return this.find({ projectId: projectId }, cb);
 };
 
 
-
-
-module.exports = mongoose.model('Task',TaskSchema);;
+module.exports = mongoose.model('Task',taskSchema);
