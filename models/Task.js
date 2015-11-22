@@ -7,9 +7,5 @@ var taskSchema = new mongoose.Schema({
   description: String
 });
 
-taskSchema.statics.findByProjectId = function (projectId, cb) {
-  return this.find({ projectId: projectId }, cb);
-};
-
 
 module.exports = mongoose.model('Task',taskSchema);

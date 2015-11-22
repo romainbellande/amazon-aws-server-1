@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Task = require('./Task.js');
+var Resource = require('./Resource.js');
 
 /* ------ Project Schema ------ */
 var projectSchema = new mongoose.Schema({
@@ -7,7 +8,8 @@ var projectSchema = new mongoose.Schema({
   customer: String,
   description: String,
   ownerId: mongoose.Schema.Types.ObjectId,
-  tasks: [Task.schema]
+  tasks: [Task.schema],
+  resources: [Resource.schema]
 });
 
 projectSchema.statics.findByName = function (name, cb) {
@@ -56,6 +58,8 @@ projectSchema.statics.getTask = function(projectId, taskId, callback){
     callback(err, task);
   });
 };
+
+/* ------ RESOURCES ------ */
 
 
 module.exports = mongoose.model('Project',projectSchema);

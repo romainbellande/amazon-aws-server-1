@@ -47,7 +47,11 @@ router.get('/owner/:id', function(req, res, next) {
 
 /* ------ PUT /project/:id ------ */
 router.put('/:id', function(req, res, next) {
-  Project.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+  Project.findByIdAndUpdate(req.params.id, {
+    name: req.query.project_name,
+    customer: req.query.project_customer,
+    description: req.query.project_description
+  },function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
