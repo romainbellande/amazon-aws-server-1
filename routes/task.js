@@ -40,7 +40,7 @@ router.get('/:projectId/task/:id', function(req, res, next) {
 
   /* ------ PUT /:projectId/task/:id ------ */
   router.put('/:projectId/task/:id', function(req, res, next) {
-    Task.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+    Task.findByIdAndUpdate(req.params.id, req.body,{new: true}, function (err, post) {
       if (err) return next(err);
       res.json(post);
     });
