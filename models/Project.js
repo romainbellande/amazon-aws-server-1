@@ -59,6 +59,29 @@ projectSchema.statics.getTask = function(projectId, taskId, callback){
   });
 };
 
+projectSchema.statics.updateTask = function(projectId,taskId,task,callback){
+    /*this.findById(projectId, function (err, project) {
+        if(!err) project.tasks.id(taskId) = task;
+        project.save(function (err, project) {
+          callback(err,project.tasks.id(taskId));
+        });
+    });*/
+    this.findOneAndUpdate(
+        {
+            "_id": projectId,
+            "tasks._id": taskId
+        },
+        {
+            $set:{
+                "tasks.$": task
+            }
+        },
+        function(err,project){
+            callback(err,project);
+        }
+    );
+};
+
 /* ------ RESOURCES ------ */
 
 
